@@ -1,0 +1,91 @@
+{
+  "protocol_version": "2026-11-17.1",
+  "decision_scope": "fixed_reference_distribution_not_per_new_scene",
+  "reference_train_scenes": 150,
+  "reference_calibration_scenes": 50,
+  "independent_test_scenes": 400,
+  "phases_per_test_scene": 10,
+  "alpha": {
+    "familywise_total": 0.05,
+    "status_budget": 0.025,
+    "paired_improvement_budget": 0.025,
+    "status_tail_budget_each": 6.200396825396825e-06,
+    "formula": "status_budget / (max_regimes * 2 * len(status_tests))"
+  },
+  "max_regimes": 96,
+  "comparison": {
+    "baseline": "P0 <= 0.05 and L <= 3",
+    "additional_baseline": "reject_all",
+    "delta_target_lower_one_sided": 0.1,
+    "false_allow_conservative_upper_target": 0.05,
+    "minimum_admissible_coverage": 0.5,
+    "undefined_decision": "U",
+    "undefined_truth": "Q",
+    "loss_for_undefined_decision": 1,
+    "loss_for_undefined_truth_both_methods": 1,
+    "claim_status_on_Q": "indeterminate",
+    "zero_allowed_false_allow_upper": null
+  },
+  "status_tests": [
+    "traffic_light_miss",
+    "traffic_light_color_error_given_detected",
+    "person_small_recall_drop",
+    "person_small_precision_drop",
+    "person_medium_recall_drop",
+    "person_medium_precision_drop",
+    "person_large_recall_drop",
+    "person_large_precision_drop",
+    "car_small_recall_drop",
+    "car_small_precision_drop",
+    "car_medium_recall_drop",
+    "car_medium_precision_drop",
+    "car_large_recall_drop",
+    "car_large_precision_drop",
+    "clean_person_precision_abs",
+    "clean_person_recall_abs",
+    "clean_car_precision_abs",
+    "clean_car_recall_abs",
+    "clean_traffic_light_precision_abs",
+    "clean_traffic_light_recall_abs",
+    "clean_traffic_light_color_abs"
+  ],
+  "test_sides": {
+    "risk_and_drop_limits": "upper for admissibility; lower for statistically established violation",
+    "clean_min_quality": "lower for admissibility; upper for statistically established violation",
+    "paired_delta": "lower one-sided confidence limit",
+    "analytical_p0_and_max_blur": "deterministic bounds without statistical alpha"
+  },
+  "limits": {
+    "p0_max": 0.05,
+    "traffic_light_miss_max": 0.05,
+    "traffic_light_color_given_found_max": 0.05,
+    "precision_recall_drop_max_pp": 0.05,
+    "blur_max_pixels": 3,
+    "clean_person_car_precision_recall_min": 0.7,
+    "clean_traffic_light_detection_and_color_min": 0.8
+  },
+  "calibration": {
+    "unit": "one_calibration_scene_with_all_phases_for_one_mode",
+    "positive_residual_quantile": 0.95,
+    "correction": "max(0, empirical_q95(observed_scene_rate - predicted_scene_rate))",
+    "false_positive_unit": "expected_FP_count_per_scene_not_precision_pp",
+    "color_when_none_detected": "no_conditional_residual; undefined_if_total_expected_found_zero_or_no_calibration_support",
+    "warning": "heuristic_not_95_percent_confidence_bound"
+  },
+  "analysis_policy": {
+    "extra_exposure_points": "at_most_one_per_each_of_16_V_f_d_groups_on_training_calibration_only",
+    "freeze_before_independent_evaluation": true,
+    "independent_evaluation_passes": 1,
+    "adaptive_test_scene_extension": false,
+    "empty_admissible_set": "valid_output_not_success",
+    "unknown_denominators": "undefined_not_zero"
+  },
+  "required_size_groups": [
+    "person_small",
+    "person_medium",
+    "person_large",
+    "car_small",
+    "car_medium",
+    "car_large"
+  ]
+}

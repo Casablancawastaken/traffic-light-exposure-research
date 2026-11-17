@@ -1,0 +1,42 @@
+[
+  {
+    "index": 1,
+    "image": "000f157f-37797ff9.jpg",
+    "source_sha256": "708aea29b09b5c247ab6ac59a66530a79b83cb154f456defe7c1489e6a79ab0f",
+    "source_background_patch_brightness_0_255": 7.814636752136752,
+    "source_label_sha256": "78d5a5a29cb99f55f18594131fe6542e905aff4b4ca989b5734b780d576ccb83",
+    "original_scene_index": 14
+  },
+  {
+    "index": 2,
+    "image": "00091078-84635cf2.jpg",
+    "source_sha256": "723e14936ff8dd9df4b36281fde1331bfaf0905ec0448eef8b79d9f41bce1063",
+    "source_background_patch_brightness_0_255": 37.14102564102564,
+    "source_label_sha256": "5576b0aa336739b4d80cbdede782a3ea7b26e99b11ae1116cce181a69c2610e0",
+    "original_scene_index": 9
+  },
+  {
+    "index": 3,
+    "image": "00091078-7cff8ea6.jpg",
+    "source_sha256": "398688ebec76b46a2d5cda7249e8bf9eef14606ba94b71a4981ffb06bd1177ee",
+    "source_background_patch_brightness_0_255": 75.50213675213675,
+    "source_label_sha256": "6736c8e6337e74124fc146ed12a4bb15524a35fed7245a13026c7458532eb860",
+    "original_scene_index": 8
+  },
+  {
+    "index": 4,
+    "image": "0000f77c-6257be58.jpg",
+    "source_sha256": "2f5423257863c5c43a6e06686dd05fc69edfe13a7b4898c66e5301903bfa094d",
+    "source_background_patch_brightness_0_255": 108.06891025641026,
+    "source_label_sha256": "656bb92be88267c18aa7284d893b0c436e8787e9299471400ad7b7b58ba09ed5",
+    "original_scene_index": 0
+  },
+  {
+    "index": 5,
+    "image": "00067cfb-caba8a02.jpg",
+    "source_sha256": "6a64ebfaa88d9c67fc6190271e9596dab2e17a0f285bda33b64991ad16a84f16",
+    "source_background_patch_brightness_0_255": 191.35790598290598,
+    "source_label_sha256": "9da1eba7e1da8ddb04672c185543ec2ce9b095d34176cbc6fddd3994eaa743f7",
+    "original_scene_index": 4
+  }
+]

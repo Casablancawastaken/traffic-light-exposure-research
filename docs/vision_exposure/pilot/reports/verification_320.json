@@ -1,0 +1,187 @@
+{
+  "status": "PASS",
+  "scenes_per_regime": 20,
+  "regimes": 4,
+  "per_scene_variant_records_checked": 320,
+  "same_scene_ids_and_colors": true,
+  "generator_sha256_verified": true,
+  "checks_executed": 321,
+  "issues": [],
+  "results": {
+    "exp5_off": {
+      "exposure_ms": 5.0,
+      "phase": 0.35,
+      "pwm_on_fraction": 0.0,
+      "color_correct_pwm": 0,
+      "color_correct_combined": 0,
+      "color_missed_combined": 0,
+      "detector_clean": {
+        "person": {
+          "TP": 44,
+          "FP": 50,
+          "FN": 20
+        },
+        "car": {
+          "TP": 101,
+          "FP": 75,
+          "FN": 85
+        },
+        "traffic light": {
+          "TP": 71,
+          "FP": 53,
+          "FN": 46
+        }
+      },
+      "detector_motion": {
+        "person": {
+          "TP": 42,
+          "FP": 38,
+          "FN": 22
+        },
+        "car": {
+          "TP": 102,
+          "FP": 72,
+          "FN": 84
+        },
+        "traffic light": {
+          "TP": 67,
+          "FP": 44,
+          "FN": 50
+        }
+      }
+    },
+    "exp5_weak": {
+      "exposure_ms": 5.0,
+      "phase": 0.175,
+      "pwm_on_fraction": 0.050000000000000044,
+      "color_correct_pwm": 14,
+      "color_correct_combined": 14,
+      "color_missed_combined": 0,
+      "detector_clean": {
+        "person": {
+          "TP": 44,
+          "FP": 50,
+          "FN": 20
+        },
+        "car": {
+          "TP": 101,
+          "FP": 75,
+          "FN": 85
+        },
+        "traffic light": {
+          "TP": 71,
+          "FP": 53,
+          "FN": 46
+        }
+      },
+      "detector_motion": {
+        "person": {
+          "TP": 42,
+          "FP": 38,
+          "FN": 22
+        },
+        "car": {
+          "TP": 102,
+          "FP": 72,
+          "FN": 84
+        },
+        "traffic light": {
+          "TP": 67,
+          "FP": 44,
+          "FN": 50
+        }
+      }
+    },
+    "exp5_partial": {
+      "exposure_ms": 5.0,
+      "phase": 0.05,
+      "pwm_on_fraction": 0.3,
+      "color_correct_pwm": 20,
+      "color_correct_combined": 20,
+      "color_missed_combined": 0,
+      "detector_clean": {
+        "person": {
+          "TP": 44,
+          "FP": 50,
+          "FN": 20
+        },
+        "car": {
+          "TP": 101,
+          "FP": 75,
+          "FN": 85
+        },
+        "traffic light": {
+          "TP": 71,
+          "FP": 53,
+          "FN": 46
+        }
+      },
+      "detector_motion": {
+        "person": {
+          "TP": 42,
+          "FP": 38,
+          "FN": 22
+        },
+        "car": {
+          "TP": 102,
+          "FP": 72,
+          "FN": 84
+        },
+        "traffic light": {
+          "TP": 67,
+          "FP": 44,
+          "FN": 50
+        }
+      }
+    },
+    "exp10_period": {
+      "exposure_ms": 10.0,
+      "phase": 0.35,
+      "pwm_on_fraction": 0.2,
+      "color_correct_pwm": 20,
+      "color_correct_combined": 20,
+      "color_missed_combined": 0,
+      "detector_clean": {
+        "person": {
+          "TP": 45,
+          "FP": 51,
+          "FN": 19
+        },
+        "car": {
+          "TP": 104,
+          "FP": 82,
+          "FN": 82
+        },
+        "traffic light": {
+          "TP": 73,
+          "FP": 64,
+          "FN": 44
+        }
+      },
+      "detector_motion": {
+        "person": {
+          "TP": 38,
+          "FP": 27,
+          "FN": 26
+        },
+        "car": {
+          "TP": 100,
+          "FP": 77,
+          "FN": 86
+        },
+        "traffic light": {
+          "TP": 59,
+          "FP": 42,
+          "FN": 58
+        }
+      }
+    }
+  },
+  "limitations": [
+    "Не подтверждает физическую достоверность двумерного синтеза",
+    "Режимы используют фиксированную фазу, а не независимые фазы ШИМ",
+    "Примеры изображений в ZIP сохранены для одной сцены каждого режима",
+    "Не проверяет логистический критерий выбора экспозиции на независимых сценах",
+    "Не измеряет доверительные интервалы и не доказывает выполнение порога ошибок 5%"
+  ]
+}

@@ -1,0 +1,542 @@
+[
+  {
+    "image": "0000f77c-6257be58.jpg",
+    "note": "GT midpoint of earlier effects-only pilot, not present controlled-LED 20-scene verification",
+    "source_sha256": "2f5423257863c5c43a6e06686dd05fc69edfe13a7b4898c66e5301903bfa094d",
+    "mode_effect": "combined",
+    "gt_midpoint": [
+      {
+        "class": "traffic light",
+        "box": [
+          563.3567265442405,
+          66.40291552587645,
+          578.9208572621035,
+          105.3132445742905
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          578.9208572621035,
+          68.13226227045075,
+          596.2143372287145,
+          105.31324357262103
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "car",
+        "box": [
+          22.12399949916528,
+          127.17714540901503,
+          178.66736460767947,
+          244.05987395659432
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          253.8034474123539,
+          110.74833956594324,
+          454.40780701168615,
+          221.42660734557597
+        ],
+        "traffic_light_color": null
+      }
+    ]
+  },
+  {
+    "image": "0001542f-5ce3cf52.jpg",
+    "note": "GT midpoint of earlier effects-only pilot, not present controlled-LED 20-scene verification",
+    "source_sha256": "4beea17f826edb1219f4f8951925de2b9a0094735718d1f105f710195fc8cbaf",
+    "mode_effect": "combined",
+    "gt_midpoint": [
+      {
+        "class": "traffic light",
+        "box": [
+          267.42485425709515,
+          162.3483896494157,
+          276.697449081803,
+          167.64701569282138
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          244.24336644407344,
+          162.3483896494157,
+          250.86664824707847,
+          168.3093445742905
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "car",
+        "box": [
+          245.18954941569282,
+          170.91134674457427,
+          256.44912938230385,
+          177.53462954924873
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          271.0203507512521,
+          171.57367462437395,
+          285.5915716193656,
+          182.17092721202002
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          277.64363355592656,
+          170.24901836393988,
+          300.1627924874791,
+          187.46955275459098
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          256.00757395659434,
+          171.46328864774625,
+          268.5918101836394,
+          181.39821185308847
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          287.1370008347246,
+          170.13863188647747,
+          316.2794425709516,
+          191.9954634390651
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          222.2288340567613,
+          166.82699148580969,
+          236.80005492487481,
+          173.4502737896494
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          213.6185671118531,
+          164.17767796327212,
+          224.8781470784641,
+          171.46328864774625
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          154.45058230383972,
+          168.06333606010017,
+          176.79588247078465,
+          176.67360300500835
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          181.60603939899832,
+          166.93737696160267,
+          206.77451235392323,
+          176.20997228714523
+        ],
+        "traffic_light_color": null
+      }
+    ]
+  },
+  {
+    "image": "0001542f-7c670be8.jpg",
+    "note": "GT midpoint of earlier effects-only pilot, not present controlled-LED 20-scene verification",
+    "source_sha256": "e17ec26c70959862975a53fe2b42dafc50542211ef9bc5880d006dd4e0de1207",
+    "mode_effect": "combined",
+    "gt_midpoint": [
+      {
+        "class": "car",
+        "box": [
+          269.70705993322207,
+          179.26000918196996,
+          280.08109699499164,
+          187.71292938230383
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          235.51115876460767,
+          176.95466794657764,
+          260.8699173622704,
+          198.08696644407348
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "person",
+        "box": [
+          347.7044560934891,
+          171.57553823038396,
+          356.5415991652755,
+          193.0920611018364
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          260.61376894824707,
+          171.0632348914858,
+          269.8351353923205,
+          176.05814173622704
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          308.257498163606,
+          162.22609181969952,
+          314.02085175292154,
+          167.98944590984976
+        ],
+        "traffic_light_color": "red"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          265.4806003338898,
+          165.6841041736227,
+          270.85973105175293,
+          171.0632348914858
+        ],
+        "traffic_light_color": "green"
+      }
+    ]
+  },
+  {
+    "image": "00067cfb-5443fe39.jpg",
+    "note": "GT midpoint of earlier effects-only pilot, not present controlled-LED 20-scene verification",
+    "source_sha256": "6de4655942cabb81960e88eaa75c303f094b631a9e58ac920f61df9f4ed4c800",
+    "mode_effect": "combined",
+    "gt_midpoint": [
+      {
+        "class": "car",
+        "box": [
+          486.776747245409,
+          164.13571402337232,
+          640.2172268781302,
+          338.56805108514186
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          -0.4180170283806319,
+          203.04451903171955,
+          52.945030884808034,
+          236.85083939899835
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          342.3327767946577,
+          192.12485659432386,
+          358.8263791318865,
+          222.61303021702838
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          332.3366550918197,
+          193.62427512520867,
+          350.8294814691152,
+          215.1159385642738
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          326.33898096828045,
+          192.62466260434056,
+          339.8337467445743,
+          210.11787696160266
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          317.3424707846411,
+          190.62543806343908,
+          331.3370425709516,
+          205.11981535893153
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          306.84654207011687,
+          192.12485659432386,
+          318.3420833055092,
+          202.1209792988314
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          351.82909398998333,
+          185.12757095158597,
+          407.3075731218698,
+          228.11089833055092
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          176.39714440734556,
+          200.62156076794656,
+          199.3882263772955,
+          215.1159385642738
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          233.37504207011688,
+          195.6234996661102,
+          250.86825642737898,
+          208.1186529215359
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          271.3603078464107,
+          196.62311118530886,
+          281.3564300500835,
+          203.12059081803005
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          249.74875609348913,
+          196.1233061769616,
+          259.86476661101835,
+          205.5799918196995
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          263.3634096828047,
+          197.122918196995,
+          268.3614707846411,
+          201.12136677796326
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          281.3564300500835,
+          194.12408113522537,
+          287.3541041736227,
+          198.6223367278798
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          290.85274624373955,
+          176.630867278798,
+          293.8515833055092,
+          182.12873489148583
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          302.3482864774624,
+          175.63125475792987,
+          306.34673606010017,
+          181.12912186978298
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          261.36418514190314,
+          172.63241769616027,
+          264.86282721202,
+          178.1302858096828
+        ],
+        "traffic_light_color": "green"
+      },
+      {
+        "class": "person",
+        "box": [
+          456.28857362270446,
+          175.1314487479132,
+          474.7814,
+          218.11477462437398
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          52.945030884808034,
+          205.61962136894823,
+          82.43359248747916,
+          223.6126427378965
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          84.43281702838061,
+          206.1194283806344,
+          107.92370450751253,
+          217.11516310517527
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          118.91944023372287,
+          204.12020383973288,
+          148.9078078464107,
+          219.61419315525876
+        ],
+        "traffic_light_color": null
+      }
+    ]
+  },
+  {
+    "image": "00067cfb-caba8a02.jpg",
+    "note": "GT midpoint of earlier effects-only pilot, not present controlled-LED 20-scene verification",
+    "source_sha256": "6a64ebfaa88d9c67fc6190271e9596dab2e17a0f285bda33b64991ad16a84f16",
+    "mode_effect": "combined",
+    "gt_midpoint": [
+      {
+        "class": "traffic light",
+        "box": [
+          305.2782993322204,
+          149.27055926544242,
+          309.767998163606,
+          164.66380767946578
+        ],
+        "traffic_light_color": "red"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          332.8578697829716,
+          165.9465776293823,
+          337.3475671118531,
+          178.13289966611018
+        ],
+        "traffic_light_color": "red"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          60.26909916527546,
+          167.22934858096826,
+          66.04156744574291,
+          178.7742851419032
+        ],
+        "traffic_light_color": "red"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          302.71275792988314,
+          170.43627545909848,
+          308.48522621035056,
+          176.85012921535892
+        ],
+        "traffic_light_color": "none"
+      },
+      {
+        "class": "traffic light",
+        "box": [
+          309.1266121869783,
+          171.0776609348915,
+          314.89908046744574,
+          176.85012921535892
+        ],
+        "traffic_light_color": "none"
+      },
+      {
+        "class": "car",
+        "box": [
+          38.46199749582638,
+          201.8641572621035,
+          80.7934298831386,
+          216.61602020033388
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          -0.021123038397320215,
+          202.5055432387312,
+          36.53784106844739,
+          220.46433305509183
+        ],
+        "traffic_light_color": null
+      },
+      {
+        "class": "car",
+        "box": [
+          94.26252237061772,
+          153.11887111853088,
+          247.55361853088482,
+          290.3753348914858
+        ],
+        "traffic_light_color": null
+      }
+    ]
+  }
+]

@@ -1,0 +1,37 @@
+{
+  "scenes": 20,
+  "pwm_frequency_hz": 100,
+  "duty": 0.2,
+  "speed_kmh": 90,
+  "depth_m": 15,
+  "render_width": 640,
+  "image_inference_size": 960,
+  "confidence": 0.1,
+  "frames": "20 source BDD100K photographs, one synthetic overlay LED per photograph",
+  "regimes": {
+    "exp5_off": {
+      "exposure_ms": 5,
+      "phase": 0.35
+    },
+    "exp5_weak": {
+      "exposure_ms": 5,
+      "phase": 0.175
+    },
+    "exp5_partial": {
+      "exposure_ms": 5,
+      "phase": 0.05
+    },
+    "exp10_period": {
+      "exposure_ms": 10,
+      "phase": 0.35
+    }
+  },
+  "generator_sha256": "d26c6e4c6ca817682db48e436b43394289dcfced9018d1287c5940a23d48191e",
+  "weights_sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5",
+  "source_dataset": "dronefreak/BDD100K",
+  "source_revision": "69e9f9a60103df97e151e2606a6ad182db824f55",
+  "source_split": "train/shard_000",
+  "gt_for_natural_objects": "not_present_in_original_20_scene_package; export_gt_midpoint.py requires local source annotations",
+  "detector_confidence_precision": "prediction JSON contains original Python float representations, no additional rounding",
+  "control_gt_midpoint": "provided per original source_manifest; full natural GT export pending"
+}

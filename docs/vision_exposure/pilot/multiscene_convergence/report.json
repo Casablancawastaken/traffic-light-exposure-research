@@ -1,0 +1,50 @@
+{
+  "scenes": 5,
+  "cases_per_scene": 3,
+  "total_step_pair_comparisons": 45,
+  "higher_res_step_comparisons": 15,
+  "detector_compared": true,
+  "near_threshold_case_present": true,
+  "max_mean_linear_diff_64_128": 4.78508991363924e-05,
+  "max_abs_contrast_delta_64_128": 6.994911978686069e-05,
+  "failures_64_128": [
+    {
+      "scene": "00091078-84635cf2.jpg",
+      "case": "long_fast_partial",
+      "exposure_ms": 10.0,
+      "speed_kmh": 90,
+      "phase": 0.13,
+      "steps": "64-128",
+      "mean_abs_linear_diff": 3.4522654459578916e-05,
+      "max_abs_linear_diff": 0.011315464973449707,
+      "contrast_low": 0.7260655314258371,
+      "contrast_high": 0.7261139379690102,
+      "abs_contrast_diff": 4.8406543173173944e-05,
+      "gt_midbox_max_coord_shift": 0.0,
+      "oracle_color_change": 0,
+      "detector_counts_change": 1,
+      "detector_color_change": 0,
+      "detector_64_128_status": "correct"
+    },
+    {
+      "scene": "00091078-7cff8ea6.jpg",
+      "case": "weak_threshold_fast",
+      "exposure_ms": 5.0,
+      "speed_kmh": 90,
+      "phase": 0.175,
+      "steps": "64-128",
+      "mean_abs_linear_diff": 1.5229989003273658e-05,
+      "max_abs_linear_diff": 0.0031057000160217285,
+      "contrast_low": 0.685967496064299,
+      "contrast_high": 0.6859814864290358,
+      "abs_contrast_diff": 1.3990364736815586e-05,
+      "gt_midbox_max_coord_shift": 0.0,
+      "oracle_color_change": 0,
+      "detector_counts_change": 1,
+      "detector_color_change": 0,
+      "detector_64_128_status": "wrong_or_unknown"
+    }
+  ],
+  "status": "INCOMPLETE_OR_FAILED",
+  "scope": "Numerical convergence of 2D overlay on JPEG; not physical sensor validation"
+}

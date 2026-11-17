@@ -1,0 +1,166 @@
+{
+  "status": "CONTROLLED_SYNTHETIC_LED_TECHNICAL_PILOT",
+  "notes": [
+    "Один искусственный светофор добавлен на каждую дорожную фотографию",
+    "Успех цветового алгоритма по эталонной рамке (oracle) является только отдельным техническим тестом",
+    "Основная оценка цвета использует только обнаруженные YOLO рамки",
+    "Двумерная накладка не является физически достоверным изображением реального светофора",
+    "Результаты не являются независимой проверкой гипотезы выбора экспозиции"
+  ],
+  "scenes": 20,
+  "inserted_leds": 20,
+  "color_distribution": {
+    "red": 7,
+    "yellow": 7,
+    "green": 6
+  },
+  "source": "Existing BDD100K images already cached locally",
+  "parameters": {
+    "render_width": 640,
+    "exposure_ms": 10.0,
+    "speed_kmh": 90.0,
+    "depth_m": 15.0,
+    "pwm_hz": 100.0,
+    "duty": 0.2,
+    "phase": 0.35,
+    "num_steps": 16,
+    "imgsz": 960,
+    "conf": 0.1
+  },
+  "pwm_on_fraction": 0.2,
+  "gt_box_color_diagnostic": {
+    "clean": {
+      "correct": 20,
+      "wrong_or_unknown": 0
+    },
+    "pwm": {
+      "correct": 20,
+      "wrong_or_unknown": 0
+    },
+    "motion": {
+      "correct": 20,
+      "wrong_or_unknown": 0
+    },
+    "combined": {
+      "correct": 20,
+      "wrong_or_unknown": 0
+    }
+  },
+  "end_to_end_color": {
+    "clean": {
+      "correct": 20,
+      "wrong_or_unknown": 0,
+      "missed": 0
+    },
+    "pwm": {
+      "correct": 20,
+      "wrong_or_unknown": 0,
+      "missed": 0
+    },
+    "motion": {
+      "correct": 20,
+      "wrong_or_unknown": 0,
+      "missed": 0
+    },
+    "combined": {
+      "correct": 20,
+      "wrong_or_unknown": 0,
+      "missed": 0
+    }
+  },
+  "detector": {
+    "clean": {
+      "person": {
+        "TP": 45,
+        "FP": 51,
+        "FN": 19,
+        "precision": 0.4688,
+        "recall": 0.7031
+      },
+      "car": {
+        "TP": 104,
+        "FP": 82,
+        "FN": 82,
+        "precision": 0.5591,
+        "recall": 0.5591
+      },
+      "traffic light": {
+        "TP": 73,
+        "FP": 64,
+        "FN": 44,
+        "precision": 0.5328,
+        "recall": 0.6239
+      }
+    },
+    "pwm": {
+      "person": {
+        "TP": 45,
+        "FP": 51,
+        "FN": 19,
+        "precision": 0.4688,
+        "recall": 0.7031
+      },
+      "car": {
+        "TP": 103,
+        "FP": 85,
+        "FN": 83,
+        "precision": 0.5479,
+        "recall": 0.5538
+      },
+      "traffic light": {
+        "TP": 73,
+        "FP": 64,
+        "FN": 44,
+        "precision": 0.5328,
+        "recall": 0.6239
+      }
+    },
+    "motion": {
+      "person": {
+        "TP": 38,
+        "FP": 27,
+        "FN": 26,
+        "precision": 0.5846,
+        "recall": 0.5938
+      },
+      "car": {
+        "TP": 100,
+        "FP": 77,
+        "FN": 86,
+        "precision": 0.565,
+        "recall": 0.5376
+      },
+      "traffic light": {
+        "TP": 59,
+        "FP": 42,
+        "FN": 58,
+        "precision": 0.5842,
+        "recall": 0.5043
+      }
+    },
+    "combined": {
+      "person": {
+        "TP": 38,
+        "FP": 26,
+        "FN": 26,
+        "precision": 0.5938,
+        "recall": 0.5938
+      },
+      "car": {
+        "TP": 100,
+        "FP": 79,
+        "FN": 86,
+        "precision": 0.5587,
+        "recall": 0.5376
+      },
+      "traffic light": {
+        "TP": 59,
+        "FP": 42,
+        "FN": 58,
+        "precision": 0.5842,
+        "recall": 0.5043
+      }
+    }
+  },
+  "model_sha256": "85a76fe86dd8afe384648546b56a7a78580c7cb7b404fc595f97969322d502d5"
+}

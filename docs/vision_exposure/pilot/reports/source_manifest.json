@@ -1,0 +1,222 @@
+[
+  {
+    "image": "0000f77c-6257be58.jpg",
+    "sha256": "2f5423257863c5c43a6e06686dd05fc69edfe13a7b4898c66e5301903bfa094d",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "0001542f-5ce3cf52.jpg",
+    "sha256": "4beea17f826edb1219f4f8951925de2b9a0094735718d1f105f710195fc8cbaf",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "0001542f-7c670be8.jpg",
+    "sha256": "e17ec26c70959862975a53fe2b42dafc50542211ef9bc5880d006dd4e0de1207",
+    "control_led_color": "green",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00067cfb-5443fe39.jpg",
+    "sha256": "6de4655942cabb81960e88eaa75c303f094b631a9e58ac920f61df9f4ed4c800",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00067cfb-caba8a02.jpg",
+    "sha256": "6a64ebfaa88d9c67fc6190271e9596dab2e17a0f285bda33b64991ad16a84f16",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00067cfb-e535423e.jpg",
+    "sha256": "e48e6cab663daabf848af41bf27119993fa2de99ab25d8cf4603932ef00a6c9d",
+    "control_led_color": "green",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00067cfb-f1b91e3c.jpg",
+    "sha256": "e9091c23be1dfe92b1d7e1274cada6c098fb25cb9c6b6dd478f9efa116ad2630",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00091078-59817bb0.jpg",
+    "sha256": "98b39903a0c46702b4b7d4f6f80ff9bf4419ee3c07b99e575b8917a9bcec890d",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00091078-7cff8ea6.jpg",
+    "sha256": "398688ebec76b46a2d5cda7249e8bf9eef14606ba94b71a4981ffb06bd1177ee",
+    "control_led_color": "green",
+    "control_led_gt_bbox": [
+      76.0,
+      28.0,
+      113.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00091078-84635cf2.jpg",
+    "sha256": "723e14936ff8dd9df4b36281fde1331bfaf0905ec0448eef8b79d9f41bce1063",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00091078-cedbfea7.jpg",
+    "sha256": "d424c1a20a2930d5e9f46bdb6e99f048d5bef97ef17d83f9789187c4dbf8fa12",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "000d35d3-41990aa4.jpg",
+    "sha256": "4d6a69ce8928690a1a2c3f9a32591fa8785a6d2f85f34280424a4596d86856ef",
+    "control_led_color": "green",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "000e0252-8523a4a9.jpg",
+    "sha256": "b30d27b46bc3ad3ae21c1051a73826374e941e2766132e6cea719c620a9722c9",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "000f157f-30b30f5e.jpg",
+    "sha256": "1db4d5b98c654c6aa1d8eb4027742ecfbfe57a9b49dfe8ef530ca79525ea3270",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "000f157f-37797ff9.jpg",
+    "sha256": "708aea29b09b5c247ab6ac59a66530a79b83cb154f456defe7c1489e6a79ab0f",
+    "control_led_color": "green",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "000f8d37-d4c09a0f.jpg",
+    "sha256": "02c2182dc3cc78a4320e8b9c962ec9cc06886727e4f4865baf11c7a7e0c32435",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "0010bf16-9ee17cd9.jpg",
+    "sha256": "90055ce7fa6396dfe7780a816c85ed287f21f1a7953cd0f3f40e8ac629db61a1",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "0010bf16-a457685b.jpg",
+    "sha256": "99eeb3fda1e46a829570301007f08cdbbf7bbc2989e0d83946252de2328ac5dd",
+    "control_led_color": "green",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "00131ea7-624f538d.jpg",
+    "sha256": "f3f0959d2b35c95d0a0afc9f20608a754187de895c63c596d3af5d01b8e5d6a0",
+    "control_led_color": "red",
+    "control_led_gt_bbox": [
+      505.0,
+      28.0,
+      542.0,
+      130.0
+    ]
+  },
+  {
+    "image": "001bad4e-2fa8f3b6.jpg",
+    "sha256": "4d4c42124531871035087487f15b11c620064d637315d71bb5bd9e0a6b72b938",
+    "control_led_color": "yellow",
+    "control_led_gt_bbox": [
+      76.0,
+      129.0,
+      113.0,
+      231.0
+    ]
+  }
+]

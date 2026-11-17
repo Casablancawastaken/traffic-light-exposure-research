@@ -1,0 +1,114 @@
+{
+  "forecast_decision_examples": {
+    "A": "A",
+    "R": "R",
+    "U": "U"
+  },
+  "status_interval_examples": {
+    "confirmed_S": "S",
+    "confirmed_F": "F",
+    "uncertain_Q": "Q"
+  },
+  "decision_example": {
+    "n_regimes_all_including_Q": 10,
+    "truth": {
+      "S": 3,
+      "F": 5,
+      "Q": 2
+    },
+    "proposed_decisions": {
+      "A": 4,
+      "R": 3,
+      "U": 3
+    },
+    "correct_allow": 1,
+    "false_allow_confirmed": 2,
+    "false_reject_confirmed": 1,
+    "uncertain_decisions": 3,
+    "uncertain_decision_on_S": 1,
+    "allowed_with_uncertain_truth_Q": 1,
+    "false_allow_conservative_upper": 0.75,
+    "false_allow_confirmed_F_over_A": 0.5,
+    "false_allow_among_confirmed_F": 0.4,
+    "admissible_coverage_with_U_in_denominator": 0.3333333333333333,
+    "improvement_analytic_minus_proposed_with_U_penalty": 0.0,
+    "improvement_reject_all_minus_proposed_with_U_penalty": -0.2,
+    "mean_loss_analytic": 0.7,
+    "mean_loss_proposed": 0.7,
+    "loss_rule": "U is a loss on known S/F; Q is charged equally to both rules on the full N",
+    "conditional_determined_coverage": 0.8
+  },
+  "empty_allowed_example": {
+    "n_regimes_all_including_Q": 20,
+    "truth": {
+      "S": 0,
+      "F": 20,
+      "Q": 0
+    },
+    "proposed_decisions": {
+      "A": 0,
+      "R": 20,
+      "U": 0
+    },
+    "correct_allow": 0,
+    "false_allow_confirmed": 0,
+    "false_reject_confirmed": 0,
+    "uncertain_decisions": 0,
+    "uncertain_decision_on_S": 0,
+    "allowed_with_uncertain_truth_Q": 0,
+    "false_allow_conservative_upper": null,
+    "false_allow_confirmed_F_over_A": null,
+    "false_allow_among_confirmed_F": 0.0,
+    "admissible_coverage_with_U_in_denominator": null,
+    "improvement_analytic_minus_proposed_with_U_penalty": 0.0,
+    "improvement_reject_all_minus_proposed_with_U_penalty": 0.0,
+    "mean_loss_analytic": 0.0,
+    "mean_loss_proposed": 0.0,
+    "loss_rule": "U is a loss on known S/F; Q is charged equally to both rules on the full N",
+    "conditional_determined_coverage": 1.0
+  },
+  "zero_errors_binomial_example_independent_trials_only": {
+    "errors": 0,
+    "n_independent": 20,
+    "alpha_one_sided": 0.05,
+    "upper": 0.13910834066826522,
+    "caveat": "Not valid treating dependent phases/modes as 20 independent trials"
+  },
+  "residuals": {
+    "unit": "one_calibration_scene with all phases for one fixed mode",
+    "color_without_detected_light": "skip conditional residual, do not impute zero",
+    "example_miss_rate_positive_95_quantile": 0.19999999999999998,
+    "example_fp_count_positive_95_quantile": 1.9,
+    "warning": "The empirical quantile is a calibration heuristic, not a 95 percent risk confidence bound"
+  },
+  "forecast_example": {
+    "traffic_light": {
+      "gt": 2,
+      "expected_missed": 0.7,
+      "expected_found": 1.3,
+      "expected_color_errors_among_found": 0.5000000000000001,
+      "expected_false_positives": 0.0,
+      "miss_rate": 0.35,
+      "recall": 0.65,
+      "precision": 1.0,
+      "color_error_given_found": 0.3846153846153847
+    },
+    "size_groups": {
+      "person_small": {
+        "tp": 2.0,
+        "fn": 1.0,
+        "fp": 1.0,
+        "precision": 0.6666666666666666,
+        "recall": 0.6666666666666666
+      },
+      "car_small": {
+        "tp": 2.2,
+        "fn": 0.8,
+        "fp": 0.35,
+        "precision": 0.8627450980392156,
+        "recall": 0.7333333333333334
+      }
+    }
+  },
+  "selftest_pass": true
+}
