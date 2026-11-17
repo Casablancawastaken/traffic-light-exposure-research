@@ -1,0 +1,5 @@
+scene,case,steps,mean_abs_linear_diff,max_abs_linear_diff,abs_contrast_diff,gt_midbox_max_coord_shift,oracle_color_change,detector_counts_change,detector_color_change,meets_original_convergence_rule
+00091078-84635cf2.jpg,long_fast_partial,128-256,1.8876664398703724e-05,0.003933906555175781,4.870491012021194e-05,0.0,False,False,False,True
+00091078-84635cf2.jpg,long_fast_partial,256-512,1.0299126188328955e-05,0.002436697483062744,1.3628672397736352e-05,0.0,False,False,False,True
+00091078-7cff8ea6.jpg,weak_threshold_fast,128-256,8.735310984775424e-06,0.001784980297088623,1.9642492012028612e-05,0.0,False,False,False,True
+00091078-7cff8ea6.jpg,weak_threshold_fast,256-512,4.810790414921939e-06,0.000701904296875,2.4758016217152345e-05,0.0,False,False,False,True

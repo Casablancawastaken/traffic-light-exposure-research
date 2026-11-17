@@ -1,0 +1,14 @@
+{
+  "status": "FOLLOW_UP_CONVERGED_ON_FAILED_CASES",
+  "source_multiscene_status": "INCOMPLETE_OR_FAILED",
+  "cases_reexamined": 2,
+  "step_levels": [
+    128,
+    256,
+    512
+  ],
+  "last_pair": "256-512",
+  "last_pair_failures": [],
+  "all_pair_comparisons": 4,
+  "scope": "Только ранее не прошедшие случаи, техническая сходимость двумерной модели; не подтверждает пригодность чистого контроля, физику датчика или гипотезу"
+}
