@@ -31,7 +31,10 @@
   "source_dataset": "dronefreak/BDD100K",
   "source_revision": "69e9f9a60103df97e151e2606a6ad182db824f55",
   "source_split": "train/shard_000",
-  "gt_for_natural_objects": "not_present_in_original_20_scene_package; export_gt_midpoint.py requires local source annotations",
+  "gt_for_natural_objects": "present: pilot/gt_midpoint_export/gt_midpoint.json, 320 scene_mode_variant records, separately marked BDD100K_natural and inserted_control",
   "detector_confidence_precision": "prediction JSON contains original Python float representations, no additional rounding",
-  "control_gt_midpoint": "provided per original source_manifest; full natural GT export pending"
+  "control_gt_midpoint": "present: 320 records and 960 verification checks in pilot/gt_midpoint_export/gt_consistency.json; images/ contains 20 GT visualizations",
+  "color_postprocessing": "HSV only; hue, saturation, brightness, minimum area and color score ratio; linear contrast measured for numerical convergence, not applied in classify_color",
+  "clean_control_status": "NOT_PASSED_absolute_thresholds_for_natural_objects",
+  "convergence_status": "initial_64_to_128_INCOMPLETE_OR_FAILED; follow_up_256_to_512_CONVERGED_for_two_failed_cases"
 }

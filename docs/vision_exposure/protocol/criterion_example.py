@@ -3,6 +3,8 @@ import json
 import math
 from pathlib import Path
 
+from statistical_contract import above, below, classify_intervals, finite_number, paired_cluster_bootstrap, classify_mode, test_specs
+
 ROOT = Path(__file__).resolve().parent
 
 
@@ -10,121 +12,204 @@ def safe_ratio(numerator, denominator):
     return numerator / denominator if denominator > 0 else None
 
 
-def empirical_upper_residual(observed, predicted, quantile=0.95):
-    if len(observed) != len(predicted) or not observed:
+def empirical_upper_residual(observed, predicted, quantile=0.95, min_support=30):
+    if len(observed) != len(predicted) or len(observed) < min_support:
+        return None
+    if not finite_number(quantile) or not 0 < quantile < 1:
+        return None
+    if any(not finite_number(a) or not finite_number(b) for a, b in zip(observed, predicted)):
         return None
     residuals = sorted(a - b for a, b in zip(observed, predicted))
     rank = min(len(residuals) - 1, max(0, math.ceil(quantile * len(residuals)) - 1))
     return max(0.0, residuals[rank])
 
 
-def aggregate_forecasts(scenes, adjustment):
-    missed = 0.0
-    found = 0.0
-    wrong_color = 0.0
+def calibration_adjustment(observed, predicted, config):
+    min_support = config['calibration']['minimum_valid_scenes_per_mode_and_metric']
+    value = empirical_upper_residual(observed, predicted, min_support=min_support)
+    return {'estimate': value, 'valid_scenes': len(observed),
+            'status': 'ESTIMATED_ZERO' if value == 0.0 else ('ESTIMATED_POSITIVE' if value is not None else 'UNDEFINED')}
+
+
+def calibrate_by_mode_scene_records(records, config):
+    buckets = {}
+    for record in records:
+        if not isinstance(record, dict):
+            raise ValueError('Calibration record must be a dict')
+        mode, metric, scene_id = (record.get(k) for k in ('mode', 'metric', 'scene_id'))
+        if mode is None or metric is None or scene_id is None:
+            raise ValueError('Missing mode, metric or scene_id')
+        key = (str(mode), str(metric))
+        buckets.setdefault(key, []).append(record)
+    result = {}
+    for (mode, metric), rows in buckets.items():
+        unique = {str(row['scene_id']) for row in rows}
+        if len(unique) != len(rows) or any(not finite_number(row.get('observed')) or not finite_number(row.get('predicted')) for row in rows):
+            value = {'estimate': None, 'valid_scenes': 0, 'status': 'UNDEFINED'}
+        else:
+            value = calibration_adjustment([row['observed'] for row in rows],
+                                           [row['predicted'] for row in rows], config)
+        result.setdefault(mode, {})[metric] = value
+    return result
+
+
+def explicit_zero_adjustments(scenes):
+    result = {name: {'estimate': 0.0, 'status': 'ESTIMATED_ZERO'} for name in
+              ('light_miss_prob', 'color_given_found_prob', 'light_fp_count')}
+    for scene in scenes:
+        for klass, groups in scene.get('objects', {}).items():
+            for size in groups:
+                result[f'{klass}_{size}_miss_prob'] = {'estimate': 0.0, 'status': 'ESTIMATED_ZERO'}
+                result[f'{klass}_{size}_fp_count'] = {'estimate': 0.0, 'status': 'ESTIMATED_ZERO'}
+    return result
+
+
+def aggregate_forecasts(scenes, adjustment, calibration_required=True):
+    def unknown():
+        return {'traffic_light': {'gt': None, 'miss_rate': None, 'recall': None, 'precision': None,
+                                  'color_error_given_found': None}, 'size_groups': {}, 'calibration_status': 'U'}
+
+    if not isinstance(adjustment, dict):
+        return unknown()
+
+    def correction(name):
+        if name not in adjustment:
+            return None if calibration_required else 0.0
+        value = adjustment[name]
+        if isinstance(value, dict):
+            value = value.get('estimate') if value.get('status') in ('ESTIMATED_ZERO', 'ESTIMATED_POSITIVE') else None
+        return value if finite_number(value) and value >= 0 else None
+
+    missed = found = wrong_color = fp_light = 0.0
     total_gt_light = 0
-    fp_light = 0.0
     grouped = {}
     for scene in scenes:
-        n_light = scene['n_light']
-        a = min(1.0, max(0.0, scene['p_light_miss'] + adjustment.get('light_miss_prob', 0.0)))
-        c = min(1.0, max(0.0, scene['p_color_error_given_found'] + adjustment.get('color_given_found_prob', 0.0)))
+        n_light = scene.get('n_light')
+        if not finite_number(n_light) or n_light < 0:
+            return unknown()
+        a0 = scene.get('p_light_miss')
+        c0 = scene.get('p_color_error_given_found')
+        f0 = scene.get('fp_light_expected', 0.0)
+        am = correction('light_miss_prob')
+        ac = correction('color_given_found_prob')
+        af = correction('light_fp_count')
+        if any(not finite_number(x) for x in (a0, c0, f0, am, ac, af)):
+            return unknown()
+        a = min(1.0, max(0.0, a0 + am))
+        c = min(1.0, max(0.0, c0 + ac))
         total_gt_light += n_light
         missed += n_light * a
         found += n_light * (1 - a)
         wrong_color += n_light * (1 - a) * c
-        fp_light += max(0.0, scene.get('fp_light_expected', 0.0) + adjustment.get('light_fp_count', 0.0))
-        for cls, sizegroups in scene['objects'].items():
+        fp_light += max(0.0, f0 + af)
+        for cls, sizegroups in scene.get('objects', {}).items():
             for size, cell in sizegroups.items():
                 name = f'{cls}_{size}'
+                n, p0, fp = cell.get('n_gt'), cell.get('p_miss'), cell.get('fp_expected')
+                adj_p = correction(f'{name}_miss_prob')
+                adj_f = correction(f'{name}_fp_count')
+                if any(not finite_number(x) for x in (n, p0, fp, adj_p, adj_f)):
+                    return unknown()
+                if min(n, fp, adj_p, adj_f) < 0 or not 0 <= p0 <= 1:
+                    return unknown()
                 if name not in grouped:
                     grouped[name] = {'tp': 0.0, 'fn': 0.0, 'fp': 0.0}
-                n = cell['n_gt']
-                p = min(1.0, max(0.0, cell['p_miss'] + adjustment.get(f'{name}_miss_prob', 0.0)))
-                lam = max(0.0, cell['fp_expected'] + adjustment.get(f'{name}_fp_count', 0.0))
-                grouped[name]['tp'] += n * (1 - p)
-                grouped[name]['fn'] += n * p
+                prob = min(1.0, max(0.0, p0 + adj_p))
+                lam = max(0.0, fp + adj_f)
+                grouped[name]['tp'] += n * (1 - prob)
+                grouped[name]['fn'] += n * prob
                 grouped[name]['fp'] += lam
-    output = {
-        'traffic_light': {
-            'gt': total_gt_light,
-            'expected_missed': missed,
-            'expected_found': found,
-            'expected_color_errors_among_found': wrong_color,
-            'expected_false_positives': fp_light,
-            'miss_rate': safe_ratio(missed, total_gt_light),
-            'recall': safe_ratio(found, total_gt_light),
-            'precision': safe_ratio(found, found + fp_light),
-            'color_error_given_found': safe_ratio(wrong_color, found)
-        },
-        'size_groups': {}
-    }
+    out = {'traffic_light': {'gt': total_gt_light, 'expected_missed': missed,
+                             'expected_found': found, 'expected_color_errors_among_found': wrong_color,
+                             'expected_false_positives': fp_light,
+                             'miss_rate': safe_ratio(missed, total_gt_light),
+                             'recall': safe_ratio(found, total_gt_light),
+                             'precision': safe_ratio(found, found + fp_light),
+                             'color_error_given_found': safe_ratio(wrong_color, found)},
+           'size_groups': {}, 'calibration_status': 'DEFINED'}
     for name, cnt in grouped.items():
-        output['size_groups'][name] = {**cnt,
+        out['size_groups'][name] = {**cnt,
             'precision': safe_ratio(cnt['tp'], cnt['tp'] + cnt['fp']),
             'recall': safe_ratio(cnt['tp'], cnt['tp'] + cnt['fn'])}
-    return output
-
+    return out
 
 
 def decide_exposure(affected, clean, p0, blur_pixels, config):
     limits = config['limits']
-    if p0 > limits['p0_max'] or blur_pixels > limits['blur_max_pixels']:
-        return 'R'
-    light = affected['traffic_light']
-    clean_light = clean['traffic_light']
-    require = [light['miss_rate'], light['color_error_given_found'],clean_light['recall'],clean_light['precision'],clean_light['color_error_given_found']]
-    if any(x is None for x in require):
-        return 'U'
-    if light['miss_rate'] > limits['traffic_light_miss_max'] or light['color_error_given_found'] > limits['traffic_light_color_given_found_max']:
-        return 'R'
-    if clean_light['recall'] < limits['clean_traffic_light_detection_and_color_min'] or clean_light['precision'] < limits['clean_traffic_light_detection_and_color_min'] or 1 - clean_light['color_error_given_found'] < limits['clean_traffic_light_detection_and_color_min']:
-        return 'R'
+    violated = False
+    unknown = False
+
+    def check_max(value, threshold):
+        nonlocal violated, unknown
+        if not finite_number(value):
+            unknown = True
+        elif above(value, threshold):
+            violated = True
+
+    def check_min(value, threshold):
+        nonlocal violated, unknown
+        if not finite_number(value):
+            unknown = True
+        elif below(value, threshold):
+            violated = True
+
+    check_max(p0, limits['p0_max'])
+    check_max(blur_pixels, limits['blur_max_pixels'])
+    if affected.get('calibration_status') != 'DEFINED' or clean.get('calibration_status') != 'DEFINED':
+        unknown = True
+    a_light = affected.get('traffic_light', {})
+    c_light = clean.get('traffic_light', {})
+    check_max(a_light.get('miss_rate'), limits['traffic_light_miss_max'])
+    check_max(a_light.get('color_error_given_found'), limits['traffic_light_color_given_found_max'])
+    check_min(c_light.get('recall'), limits['clean_traffic_light_detection_and_color_min'])
+    check_min(c_light.get('precision'), limits['clean_traffic_light_detection_and_color_min'])
+    color = c_light.get('color_error_given_found')
+    check_min(1 - color if finite_number(color) else None, limits['clean_traffic_light_detection_and_color_min'])
+
     required = set(config['required_size_groups'])
-    if not required.issubset(clean['size_groups']) or not required.issubset(affected['size_groups']):
-        return 'U'
-    if set(clean['size_groups']) != set(affected['size_groups']):
-        return 'U'
-    for name, group in affected['size_groups'].items():
-        baseline = clean['size_groups'][name]
-        if any(group[k] is None or baseline[k] is None for k in ('recall','precision')):
-            return 'U'
-        if baseline['recall'] < limits['clean_person_car_precision_recall_min'] or baseline['precision'] < limits['clean_person_car_precision_recall_min']:
-            return 'R'
-        if baseline['recall'] - group['recall'] > limits['precision_recall_drop_max_pp'] or baseline['precision'] - group['precision'] > limits['precision_recall_drop_max_pp']:
-            return 'R'
-    return 'A'
+    a_groups = affected.get('size_groups', {})
+    c_groups = clean.get('size_groups', {})
+    if not required.issubset(a_groups) or not required.issubset(c_groups):
+        unknown = True
+    if set(a_groups) != set(c_groups):
+        unknown = True
+
+    for name in sorted(required):
+        a = a_groups.get(name, {})
+        c = c_groups.get(name, {})
+        for metric in ('precision', 'recall'):
+            left = c.get(metric)
+            right = a.get(metric)
+            check_max(left - right if finite_number(left) and finite_number(right) else None,
+                      limits['precision_recall_drop_max_pp'])
+
+    for klass in ('person', 'car'):
+        for metric in ('precision', 'recall'):
+            tp = fp = fn = 0.0
+            complete = True
+            for size in ('small', 'medium', 'large'):
+                record = c_groups.get(f'{klass}_{size}', {})
+                values = [record.get(k) for k in ('tp', 'fp', 'fn')]
+                if any(not finite_number(x) or x < 0 for x in values):
+                    complete = False
+                    break
+                tp += values[0]
+                fp += values[1]
+                fn += values[2]
+            result = safe_ratio(tp, tp + (fp if metric == 'precision' else fn)) if complete else None
+            check_min(result, limits['clean_person_car_precision_recall_min'])
+
+    return 'R' if violated else ('U' if unknown else 'A')
 
 
 def classify_truth_from_intervals(checks, check_specs):
-    if not checks:
-        return 'Q'
-    unknown = False
+    intervals = {}
     for name, data in checks.items():
-        if name not in check_specs or data is None:
-            return 'Q'
-        spec = check_specs[name]
-        low = data.get('lower')
-        high = data.get('upper')
-        if low is None or high is None or low > high:
-            return 'Q'
-        limit = spec['threshold']
-        direction = spec['direction']
-        if direction == 'max':
-            if low > limit:
-                return 'F'
-            if high > limit:
-                unknown = True
-        elif direction == 'min':
-            if high < limit:
-                return 'F'
-            if low < limit:
-                unknown = True
+        if isinstance(data, dict):
+            intervals[name] = [data.get('lower'), data.get('upper')]
         else:
-            raise ValueError(direction)
-    if set(checks) != set(check_specs):
-        return 'Q'
-    return 'Q' if unknown else 'S'
+            intervals[name] = data
+    return classify_intervals(intervals, check_specs)
 
 
 def losses(method, truth):
@@ -222,8 +307,9 @@ def example(config):
     specs = {'risk': {'threshold':0.05,'direction':'max'}}
     good_group = {size:{'n_gt':1,'p_miss':0.01,'fp_expected':0.01} for size in ('small','medium','large')}
     good_scene = {'n_light':1,'p_light_miss':0.01,'p_color_error_given_found':0.01,'fp_light_expected':0.01,'objects': {'person':good_group, 'car':good_group}}
-    good = aggregate_forecasts([good_scene],{})
-    no_light = aggregate_forecasts([{'n_light':1,'p_light_miss':1.0,'p_color_error_given_found':0.01,'objects':{}}],{})
+    good = aggregate_forecasts([good_scene],explicit_zero_adjustments([good_scene]))
+    no_light = json.loads(json.dumps(good))
+    no_light['traffic_light']['color_error_given_found'] = None
     return {
         'forecast_decision_examples': {'A':decide_exposure(good,good,0.0,1.0,config),'R':decide_exposure(good,good,0.5,1.0,config),'U':decide_exposure(no_light,good,0.0,1.0,config)},
         'status_interval_examples': {
@@ -241,31 +327,64 @@ def example(config):
         'residuals': {
             'unit':'one_calibration_scene with all phases for one fixed mode',
             'color_without_detected_light':'skip conditional residual, do not impute zero',
-            'example_miss_rate_positive_95_quantile':empirical_upper_residual([0.0,0.1,0.3,0.2],[0.1,0.1,0.1,0.1]),
-            'example_fp_count_positive_95_quantile':empirical_upper_residual([1,2,0,3],[0.7,0.9,0.5,1.1]),
+            'example_miss_rate_positive_95_quantile':empirical_upper_residual(([0.0,0.1,0.3,0.2] * 8)[:30], [0.1] * 30, min_support=config['calibration']['minimum_valid_scenes_per_mode_and_metric']),
+            'example_fp_count_positive_95_quantile':empirical_upper_residual(([1,2,0,3] * 8)[:30], ([0.7,0.9,0.5,1.1] * 8)[:30], min_support=config['calibration']['minimum_valid_scenes_per_mode_and_metric']),
             'warning':'The empirical quantile is a calibration heuristic, not a 95 percent risk confidence bound'
         },
-        'forecast_example':aggregate_forecasts(sample_scenes,{'light_miss_prob':0.0,'color_given_found_prob':0.0,'person_small_fp_count':0.1})
+        'calibration_mode_example': calibrate_by_mode_scene_records(
+            [{'mode': 'r_1', 'metric': 'traffic_light_miss', 'scene_id': i, 'observed': 0.0, 'predicted': 0.0} for i in range(30)] +
+            [{'mode': 'r_2', 'metric': 'traffic_light_miss', 'scene_id': i, 'observed': 0.0, 'predicted': 0.0} for i in range(29)], config),
+        'forecast_example':aggregate_forecasts(sample_scenes,{**explicit_zero_adjustments(sample_scenes),'person_small_fp_count':0.1})
     }
+
+
+def synthetic_scene(mode):
+    size_groups = {part: {'tp': 10, 'fp': 0, 'fn': 0} for part in ('small', 'medium', 'large')}
+    clean = {'traffic_light': {'tp': 10, 'fp': 0, 'fn': 0, 'color_errors': 0, 'correct_color': 10},
+             'person': size_groups, 'car': size_groups}
+    affected = json.loads(json.dumps(clean))
+    if mode == 'unsafe':
+        affected['traffic_light'].update({'tp': 0, 'fn': 10, 'color_errors': 0, 'correct_color': 0})
+    if mode == 'undefined':
+        del affected['traffic_light']['correct_color']
+    return {'clean': clean, 'affected': affected, 'physical': {'p0': 0, 'blur_pixels': 1}}
+
+
+def statistical_example(config):
+    scenes = [{'modes': {mode: synthetic_scene(mode) for mode in ('safe', 'unsafe', 'undefined')}} for _ in range(24)]
+    decisions = {'safe': {'analytic': 'A', 'proposed': 'A'},
+                 'unsafe': {'analytic': 'A', 'proposed': 'R'},
+                 'undefined': {'analytic': 'R', 'proposed': 'U'}}
+    by_mode = {mode: classify_mode([row['modes'][mode] for row in scenes], config)
+               for mode in decisions}
+    bootstrap = paired_cluster_bootstrap(scenes, decisions, config, repetitions=60)
+    return {'unit': 'independent synthetic scene with all phases and paired modes',
+            'synthetic_scenes': len(scenes), 'mode_results': by_mode,
+            'paired_delta': bootstrap, 'not_independent_empirical_claim': True}
 
 
 def selftest(report, config):
     u = report['decision_example']
     assert u['n_regimes_all_including_Q'] == 10
-    assert u['truth']=={'S':3,'F':5,'Q':2}
-    assert u['proposed_decisions']=={'A':4,'R':3,'U':3}
-    assert u['false_allow_conservative_upper']==0.75
-    assert u['admissible_coverage_with_U_in_denominator']==1/3
+    assert u['truth'] == {'S': 3, 'F': 5, 'Q': 2}
+    assert u['proposed_decisions'] == {'A': 4, 'R': 3, 'U': 3}
+    assert u['false_allow_conservative_upper'] == 0.75
+    assert u['admissible_coverage_with_U_in_denominator'] == 1 / 3
     assert report['empty_allowed_example']['false_allow_conservative_upper'] is None
-    assert abs(report['zero_errors_binomial_example_independent_trials_only']['upper'] - (1-0.05**(1/20)))<1e-10
-    a=report['forecast_example']['traffic_light']
-    assert abs(a['expected_found']-1.3)<1e-9
-    assert abs(a['color_error_given_found']-(0.9*0.2+0.4*0.8)/1.3)<1e-9
-    assert report['status_interval_examples']=={'confirmed_S':'S','confirmed_F':'F','uncertain_Q':'Q'}
-    assert report['forecast_decision_examples']=={'A':'A','R':'R','U':'U'}
-    expected=config['alpha']['status_budget']/(config['max_regimes']*2*len(config['status_tests']))
+    assert abs(report['zero_errors_binomial_example_independent_trials_only']['upper'] - (1 - 0.05 ** (1 / 20))) < 1e-10
+    light = report['forecast_example']['traffic_light']
+    assert abs(light['expected_found'] - 1.3) < 1e-9
+    assert abs(light['color_error_given_found'] - (0.9 * 0.2 + 0.4 * 0.8) / 1.3) < 1e-9
+    assert report['status_interval_examples'] == {'confirmed_S': 'S', 'confirmed_F': 'F', 'uncertain_Q': 'Q'}
+    assert report['forecast_decision_examples'] == {'A': 'A', 'R': 'R', 'U': 'U'}
+    expected = config['alpha']['status_budget'] / (config['max_regimes'] * 2 * len(config['status_tests']))
     assert abs(expected - config['alpha']['status_tail_budget_each']) < 1e-16
-    assert len(config['status_tests'])==21
+    assert len(config['status_tests']) == 21
+    assert report['statistical_example']['mode_results']['unsafe']['status'] == 'F'
+    assert report['statistical_example']['mode_results']['undefined']['status'] == 'Q'
+    assert report['statistical_example']['paired_delta']['status_recomputed_in_each_bootstrap'] is True
+    assert report['calibration_mode_example']['r_1']['traffic_light_miss']['status'] == 'ESTIMATED_ZERO'
+    assert report['calibration_mode_example']['r_2']['traffic_light_miss']['status'] == 'UNDEFINED'
     return True
 
 
@@ -276,6 +395,7 @@ def main():
     args=ap.parse_args()
     config=json.loads(Path(args.config).read_text(encoding='utf-8'))
     result=example(config)
+    result['statistical_example'] = statistical_example(config)
     result['selftest_pass']=selftest(result,config)
     Path(args.out).write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps({'selftest_pass':result['selftest_pass'],'decision_example':result['decision_example'],'zero_errors_upper_95':result['zero_errors_binomial_example_independent_trials_only']['upper']},ensure_ascii=False,indent=2))

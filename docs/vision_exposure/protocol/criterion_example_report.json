@@ -81,6 +81,22 @@
     "example_fp_count_positive_95_quantile": 1.9,
     "warning": "The empirical quantile is a calibration heuristic, not a 95 percent risk confidence bound"
   },
+  "calibration_mode_example": {
+    "r_1": {
+      "traffic_light_miss": {
+        "estimate": 0.0,
+        "valid_scenes": 30,
+        "status": "ESTIMATED_ZERO"
+      }
+    },
+    "r_2": {
+      "traffic_light_miss": {
+        "estimate": null,
+        "valid_scenes": 29,
+        "status": "UNDEFINED"
+      }
+    }
+  },
   "forecast_example": {
     "traffic_light": {
       "gt": 2,
@@ -108,7 +124,289 @@
         "precision": 0.8627450980392156,
         "recall": 0.7333333333333334
       }
-    }
+    },
+    "calibration_status": "DEFINED"
+  },
+  "statistical_example": {
+    "unit": "independent synthetic scene with all phases and paired modes",
+    "synthetic_scenes": 24,
+    "mode_results": {
+      "safe": {
+        "status": "Q",
+        "intervals": {
+          "traffic_light_miss": {
+            "lower": 0.0,
+            "upper": 0.4272941153581746
+          },
+          "traffic_light_color_error_given_detected": {
+            "lower": 0.0,
+            "upper": 0.4272941153581746
+          },
+          "person_small_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_small_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "person_medium_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_medium_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "person_large_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_large_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_small_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_small_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_medium_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_medium_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_large_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_large_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "clean_person_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_person_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_car_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_car_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_traffic_light_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_traffic_light_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_traffic_light_color_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          }
+        }
+      },
+      "unsafe": {
+        "status": "F",
+        "intervals": {
+          "traffic_light_miss": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "traffic_light_color_error_given_detected": null,
+          "person_small_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_small_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "person_medium_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_medium_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "person_large_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_large_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_small_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_small_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_medium_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_medium_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_large_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_large_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "clean_person_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_person_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_car_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_car_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_traffic_light_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_traffic_light_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_traffic_light_color_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          }
+        }
+      },
+      "undefined": {
+        "status": "Q",
+        "intervals": {
+          "traffic_light_miss": {
+            "lower": 0.0,
+            "upper": 0.4272941153581746
+          },
+          "traffic_light_color_error_given_detected": null,
+          "person_small_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_small_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "person_medium_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_medium_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "person_large_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "person_large_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_small_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_small_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_medium_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_medium_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "car_large_recall_drop": {
+            "lower": -0.44359794018383436,
+            "upper": 0.44359794018383436
+          },
+          "car_large_precision_drop": {
+            "lower": -0.7051699478552454,
+            "upper": 0.7051699478552454
+          },
+          "clean_person_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_person_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_car_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_car_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_traffic_light_precision_abs": {
+            "lower": 0.3088048738563456,
+            "upper": 1.0
+          },
+          "clean_traffic_light_recall_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          },
+          "clean_traffic_light_color_abs": {
+            "lower": 0.5727058846418254,
+            "upper": 1.0
+          }
+        }
+      }
+    },
+    "paired_delta": {
+      "point": 0.3333333333333333,
+      "lower": 0.3333333333333333,
+      "alpha": 0.025,
+      "replicates": 60,
+      "statuses": {
+        "safe": "Q",
+        "unsafe": "F",
+        "undefined": "Q"
+      },
+      "status_recomputed_in_each_bootstrap": true,
+      "interpretation": "Percentile cluster bootstrap is an approximate interval; coverage requires validation, especially with discrete S/F/Q transitions."
+    },
+    "not_independent_empirical_claim": true
   },
   "selftest_pass": true
 }

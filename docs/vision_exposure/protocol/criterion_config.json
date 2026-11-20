@@ -1,5 +1,5 @@
 {
-  "protocol_version": "2026-11-17.1",
+  "protocol_version": "2026-11-20.2",
   "decision_scope": "fixed_reference_distribution_not_per_new_scene",
   "reference_train_scenes": 150,
   "reference_calibration_scenes": 50,
@@ -10,7 +10,8 @@
     "status_budget": 0.025,
     "paired_improvement_budget": 0.025,
     "status_tail_budget_each": 6.200396825396825e-06,
-    "formula": "status_budget / (max_regimes * 2 * len(status_tests))"
+    "formula": "status_budget / (max_regimes * 2 * len(status_tests))",
+    "status_registry_note": "21 tests: 2 light risks, 12 size-group drops, 4 clean class-wide person/car minima, 3 clean light minima"
   },
   "max_regimes": 96,
   "comparison": {
@@ -53,7 +54,8 @@
     "risk_and_drop_limits": "upper for admissibility; lower for statistically established violation",
     "clean_min_quality": "lower for admissibility; upper for statistically established violation",
     "paired_delta": "lower one-sided confidence limit",
-    "analytical_p0_and_max_blur": "deterministic bounds without statistical alpha"
+    "analytical_p0_and_max_blur": "deterministic bounds without statistical alpha",
+    "counter_ratio_bounds": "one_sided_from_scene_counter_component_intervals; each_tail_alpha_splits_across_components_by_union_bound"
   },
   "limits": {
     "p0_max": 0.05,
@@ -70,7 +72,11 @@
     "correction": "max(0, empirical_q95(observed_scene_rate - predicted_scene_rate))",
     "false_positive_unit": "expected_FP_count_per_scene_not_precision_pp",
     "color_when_none_detected": "no_conditional_residual; undefined_if_total_expected_found_zero_or_no_calibration_support",
-    "warning": "heuristic_not_95_percent_confidence_bound"
+    "warning": "heuristic_not_95_percent_confidence_bound",
+    "minimum_valid_scenes_per_mode_and_metric": 30,
+    "pooling": "fixed_mode_r=(V,t,f,d)_only; 50_calibration_scenes; all_phases_clustered_within_scene; no_pooling_between_modes",
+    "undefined_residual": "UNDEFINED => U; never replace by a zero adjustment",
+    "estimated_zero": "ESTIMATED_ZERO is distinct from UNDEFINED"
   },
   "analysis_policy": {
     "extra_exposure_points": "at_most_one_per_each_of_16_V_f_d_groups_on_training_calibration_only",
@@ -87,5 +93,29 @@
     "car_small",
     "car_medium",
     "car_large"
-  ]
+  ],
+  "statistical_contract": {
+    "status_test_count": 21,
+    "absolute_clean_person_car": "per_class_aggregated_TP_FP_FN_across_three_size_groups",
+    "degradation_tests": "per_size_group_precision_and_recall_paired_clean_vs_affected",
+    "confidence_method": "bounded_independent_scene_count_means_Hoeffding; exact_Clopper_Pearson_for_zero_or_cap_events; ratio_bounds_by_component_intervals",
+    "phase_cluster": "all_phases_of_a_scene_kept_together; one_independent_unit_is_one_scene",
+    "counter_if_over_cap": "UNDEFINED_Q; never silently truncate or discard",
+    "max_scene_counts": {
+      "tp": 10,
+      "fn": 10,
+      "fp": 30,
+      "color_errors": 10,
+      "correct_color": 10
+    },
+    "count_cap_scope": "per_size_group_per_scene_across_all_phases; person_car_class_total_cap_is_three_times_group_cap; must_predeclare_and_audit_on_training_data_before_test",
+    "empty_denominator": "UNDEFINED_Q",
+    "zero_errors": "exact_one_sided_binomial_any_nonzero_scene_event; not_zero_upper_risk",
+    "status_from_intervals": "any_definite_violation_F; otherwise_any_undefined_Q; otherwise_S",
+    "tolerance_absolute": 1e-12,
+    "bootstrap_repetitions": 10000,
+    "bootstrap_seed": 20261120,
+    "bootstrap_delta": "resample_entire_scene_with_all_phases_all_regimes; recompute_counter_intervals_and_S_F_Q_on_every_resample; use_fixed_prediction_decisions; compute_full_grid_paired_loss_and_one_sided_lower_percentile",
+    "bootstrap_inference_limit": "percentile_cluster_bootstrap_is_approximate_not_finite_sample_guaranteed; verify_coverage_before_final_claim"
+  }
 }
